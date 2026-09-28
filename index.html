@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kelvoh Trades Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="panel calculator-panel">
+        <div class="display-wrap">
+          <div id="previous" class="previous"></div>
+          <div id="display" class="display">0</div>
+        </div>
+
+        <div class="button-grid">
+          <button class="btn btn-utility" data-action="clear">C</button>
+          <button class="btn btn-utility" data-action="delete">DEL</button>
+          <button class="btn btn-utility" data-action="percent">%</button>
+          <button class="btn btn-operator" data-value="/">÷</button>
+
+          <button class="btn" data-value="7">7</button>
+          <button class="btn" data-value="8">8</button>
+          <button class="btn" data-value="9">9</button>
+          <button class="btn btn-operator" data-value="*">×</button>
+
+          <button class="btn" data-value="4">4</button>
+          <button class="btn" data-value="5">5</button>
+          <button class="btn" data-value="6">6</button>
+          <button class="btn btn-operator" data-value="-">−</button>
+
+          <button class="btn" data-value="1">1</button>
+          <button class="btn" data-value="2">2</button>
+          <button class="btn" data-value="3">3</button>
+          <button class="btn btn-operator" data-value="+">+</button>
+
+          <button class="btn btn-wide" data-value="0">0</button>
+          <button class="btn" data-value=".">.</button>
+          <button class="btn btn-equals" data-action="equals">=</button>
+        </div>
+      </section>
+
+      <section class="panel tool-panel">
+        <h2>Currency Converter</h2>
+        <div class="tool-grid">
+          <label>
+            Amount
+            <input id="currency-amount" type="number" step="0.01" value="100" />
+          </label>
+
+          <label>
+            From
+            <select id="currency-from">
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+              <option value="NGN">NGN</option>
+              <option value="JPY">JPY</option>
+            </select>
+          </label>
+
+          <label>
+            To
+            <select id="currency-to">
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+              <option value="NGN" selected>NGN</option>
+              <option value="JPY">JPY</option>
+            </select>
+          </label>
+        </div>
+
+        <button id="convert-btn" class="action-btn">Convert</button>
+        <p id="currency-result" class="tool-result">100 USD = 0 NGN</p>
+      </section>
+
+      <section class="panel tool-panel">
+        <h2>Risk &amp; Lot Size Calculator</h2>
+        <div class="tool-grid">
+          <label>
+            Account size
+            <input id="account-size" type="number" step="100" value="1000" />
+          </label>
+
+          <label>
+            Risk %
+            <input id="risk-percent" type="number" step="0.1" value="2" />
+          </label>
+
+          <label>
+            Stop loss (pips)
+            <input id="stop-loss-pips" type="number" step="1" value="30" />
+          </label>
+
+          <label>
+            Pip value per 1.0 lot
+            <input id="pip-value" type="number" step="0.01" value="10" />
+          </label>
+        </div>
+
+        <button id="risk-btn" class="action-btn">Calculate</button>
+        <div class="risk-output">
+          <p>Risk amount: <strong id="risk-amount">$0.00</strong></p>
+          <p>Lot size: <strong id="lot-size">0.00</strong> lots</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
