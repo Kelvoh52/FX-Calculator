@@ -169,37 +169,68 @@ const exchangeRates = {
   USD: 1,
   EUR: 0.92,
   GBP: 0.79,
-  NGN: 1550,
   JPY: 156.4,
+  NGN: 1550,
+  KES: 129.5,
+  AED: 3.67,
+  AUD: 1.51,
+  CAD: 1.36,
+  CHF: 0.89,
+  CNY: 7.24,
+  EGP: 49.3,
+  GHS: 15.3,
+  HKD: 7.8,
+  INR: 83.4,
+  KRW: 1376,
+  MAD: 9.95,
+  NOK: 10.55,
+  SEK: 10.26,
+  SGD: 1.35,
+  TZS: 2515,
+  UGX: 3760,
+  ZAR: 18.35,
 };
 
-function formatCurrency(value, currency) {
-  const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
+function formatMoney(amount, currencyCode) {
+  const safeAmount = Number.isFinite(amount) ? amount : 0;
+  const formatted = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  });
+  }).format(safeAmount);
 
-  return formatter.format(value);
+  if (currencyCode === 'USD') {
+    return `$${formatted}`;
+  }
+
+  return `${currencyCode} ${formatted}`;
+}
+
+function formatCurrency(amount, currencyCode) {
+  return formatMoney(amount, currencyCode);
 }
 
 function convertCurrency() {
   const amountInput = document.getElementById('currency-amount');
-  const fromSelect = document.getElementById('currency-from');
-  const toSelect = document.getElementById('currency-to');
+  const fromInput = document.getElementById('currency-from');
+  const toInput = document.getElementById('currency-to');
   const resultBox = document.getElementById('currency-result');
 
   const amount = Number(amountInput.value || 0);
-  const from = fromSelect.value;
-  const to = toSelect.value;
+  const from = String(fromInput.value || '').trim().toUpperCase();
+  const to = String(toInput.value || '').trim().toUpperCase();
 
   if (!Number.isFinite(amount)) {
     resultBox.textContent = 'Enter a valid amount';
     return;
   }
 
+  if (!exchangeRates[from] || !exchangeRates[to]) {
+    resultBox.textContent = 'Unsupported currency. Try USD, EUR, GBP, KES, NGN, JPY, CAD, AED, ZAR, and more.';
+    return;
+  }
+
   const converted = (amount / exchangeRates[from]) * exchangeRates[to];
-  resultBox.textContent = `${amount} ${from} = ${formatCurrency(converted, to)}`;
+  resultBox.textContent = `${amount} ${from} = ${formatMoney(converted, to)}`;
 }
 
 function calculateRisk() {
